@@ -7,6 +7,34 @@ Original file is located at
     https://colab.research.google.com/drive/1EDmjHuqMJHGBjjjFp_FKmnVd0vOcr7bG
 """
 
+#%%writefile app.py
+import streamlit as st
+import pickle
+import pandas as pd
+
+# Load model
+model = pickle.load(open('Copy of Project.pkl', 'rb'))
+
+st.title('Heart Attack Risk Prediction')
+
+age = st.number_input('Age')
+gender = st.selectbox('Gender (0 for Female, 1 for Male)', [0, 1])
+heart_rate = st.number_input('Heart Rate')
+sys_bp = st.number_input('Systolic Blood Pressure')
+dia_bp = st.number_input('Diastolic Blood Pressure')
+blood_sugar = st.number_input('Blood Sugar')
+ckmb = st.number_input('CK-MB')
+troponin = st.number_input('Troponin')
+
+if st.button('Predict'):
+    input_data = pd.DataFrame([[age, gender, heart_rate, sys_bp, dia_bp, blood_sugar, ckmb, troponin]],
+                              columns=['Age', 'Gender', 'Heart rate', 'Systolic blood pressure',
+                                       'Diastolic blood pressure', 'Blood sugar', 'CK-MB', 'Troponin'])
+    prediction = model.predict(input_data)
+    st.success(f'Predicted Risk Level: {prediction[0]}')
+
+
+
 import streamlit as st
 import pickle
 
@@ -30,31 +58,5 @@ if st.button('Predict Risk'):
 
 #!pip install streamlit
 #!pip install pyngrok
-
-#%%writefile app.py
-import streamlit as st
-import pickle
-import pandas as pd
-
-# Load model
-model = pickle.load(open('model.pkl', 'rb'))
-
-st.title('Heart Attack Risk Prediction')
-
-age = st.number_input('Age')
-gender = st.selectbox('Gender (0 for Female, 1 for Male)', [0, 1])
-heart_rate = st.number_input('Heart Rate')
-sys_bp = st.number_input('Systolic Blood Pressure')
-dia_bp = st.number_input('Diastolic Blood Pressure')
-blood_sugar = st.number_input('Blood Sugar')
-ckmb = st.number_input('CK-MB')
-troponin = st.number_input('Troponin')
-
-if st.button('Predict'):
-    input_data = pd.DataFrame([[age, gender, heart_rate, sys_bp, dia_bp, blood_sugar, ckmb, troponin]],
-                              columns=['Age', 'Gender', 'Heart rate', 'Systolic blood pressure',
-                                       'Diastolic blood pressure', 'Blood sugar', 'CK-MB', 'Troponin'])
-    prediction = model.predict(input_data)
-    st.success(f'Predicted Risk Level: {prediction[0]}')
 
 #
