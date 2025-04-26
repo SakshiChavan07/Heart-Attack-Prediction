@@ -23,3 +23,39 @@ if st.button('Predict'):
                                        'Diastolic blood pressure', 'Blood sugar', 'CK-MB', 'Troponin'])
     prediction = model.predict(input_data)
     st.success(f'Predicted Risk Level: {prediction[0]}')
+
+
+
+
+
+
+
+
+
+
+
+
+
+import streamlit as st
+import pickle
+
+# Load your saved model
+#model = pickle.load(open('Project.pkl', 'rb'))
+
+# Frontend UI
+st.title('❤️ Heart Attack Risk Predictor')
+
+age = st.number_input('Enter Age')
+heart_rate = st.number_input('Enter Heart Rate')
+blood_sugar = st.number_input('Enter Blood Sugar')
+
+# Prediction button
+if st.button('Predict Risk'):
+    pred = model.predict([[age, heart_rate, blood_sugar]])
+    if pred[0] == 1:
+        st.error('⚠️ High Risk of Heart Attack!')
+    else:
+        st.success('✅ Low Risk! Stay Healthy!')
+
+#!pip install streamlit
+#!pip install pyngrok
