@@ -8,30 +8,23 @@ Original file is located at
 """
 
 
-
-# app.py
-
 import streamlit as st
 import pickle
 
-# Load the trained model
-with open('Project.pkl', 'rb') as file:
-    model = pickle.load(file)
+# Load your saved model
+#model = pickle.load(open('Project.pkl', 'rb'))
 
-st.title('Heart Attack Risk Prediction')
+# Frontend UI
+st.title('❤️ Heart Attack Risk Predictor')
 
-# Input fields
-age = st.number_input('Age', min_value=1, max_value=120)
-heart_rate = st.number_input('Heart Rate', min_value=30, max_value=220)
-blood_sugar = st.number_input('Blood Sugar', min_value=50, max_value=300)
+age = st.number_input('Enter Age')
+heart_rate = st.number_input('Enter Heart Rate')
+blood_sugar = st.number_input('Enter Blood Sugar')
 
-# Predict button
-if st.button('Predict'):
-    # Predict using model
+# Prediction button
+if st.button('Predict Risk'):
     pred = model.predict([[age, heart_rate, blood_sugar]])
-    
-    # Display the prediction
     if pred[0] == 1:
         st.error('⚠️ High Risk of Heart Attack!')
     else:
-        st.success('✅ Low Risk of Heart Attack.')
+        st.success('✅ Low Risk! Stay Healthy!')
