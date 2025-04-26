@@ -13,7 +13,7 @@ import streamlit as st
 import pickle
 
 # Load the trained model
-with open('model.pkl', 'rb') as file:
+with open('Project.pkl', 'rb') as file:
     model = pickle.load(file)
 
 st.title('Heart Attack Risk Prediction')
