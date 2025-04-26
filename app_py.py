@@ -31,7 +31,7 @@ if st.button('Predict Risk'):
 #!pip install streamlit
 #!pip install pyngrok
 
-%%writefile app.py
+#%%writefile app.py
 import streamlit as st
 import pickle
 import pandas as pd
