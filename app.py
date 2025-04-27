@@ -1,3 +1,6 @@
+
+
+# app.py
 import streamlit as st
 import numpy as np
 from sklearn.linear_model import LogisticRegression
@@ -8,14 +11,14 @@ from sklearn.model_selection import train_test_split
 # -----------------------
 
 # Dummy dataset for training
-X = np.random.rand(200, 9)  # Features: Age, Heart Rate, Blood Sugar, BP, Cholesterol, Smoking, Diabetes, Family History, Lifestyle
-y = np.random.randint(0, 3, 200)  # Labels: 0 = Low Risk, 1 = Moderate Risk, 2 = High Risk
+X = np.random.rand(200, 3)  # Features: Age, Heart Rate, Blood Sugar
+y = np.random.randint(0, 2, 200)  # Labels: 0 = Low Risk, 1 = High Risk
 
 # Split the data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 # Train a simple Logistic Regression model
-model = LogisticRegression(max_iter=1000)
+model = LogisticRegression()
 model.fit(X_train, y_train)
 
 # -----------------------
@@ -28,7 +31,6 @@ st.title('❤️ Heart Attack Risk Prediction App')
 st.write("""
 ### Enter your health details below:
 """)
-
 # User input: Name and Gender
 name = st.text_input('Enter your Name:')
 gender = st.selectbox('Select your Gender:', ['Male', 'Female', 'Other'])
@@ -36,53 +38,21 @@ gender = st.selectbox('Select your Gender:', ['Male', 'Female', 'Other'])
 # Greeting message when both fields are filled
 if name and gender:
     st.success(f"Hello {name}, let's get started!")
-
-# Input fields for health details
+    
+# Input fields
 age = st.number_input('Enter your Age:', min_value=1, max_value=120)
 heart_rate = st.number_input('Enter your Heart Rate:', min_value=30, max_value=220)
 blood_sugar = st.number_input('Enter your Blood Sugar Level:', min_value=50, max_value=300)
 
-# New inputs for additional factors
-blood_pressure = st.number_input('Enter your Blood Pressure (mmHg):', min_value=80, max_value=200)
-cholesterol = st.number_input('Enter your Cholesterol Level (mg/dL):', min_value=100, max_value=300)
-smoking = st.selectbox('Do you smoke?', ['No', 'Yes'])
-diabetes = st.selectbox('Do you have diabetes?', ['No', 'Yes'])
-family_history = st.selectbox('Do you have a family history of heart disease?', ['No', 'Yes'])
-lifestyle = st.selectbox('Do you follow a healthy lifestyle?', ['No', 'Yes'])
-
-# Convert categorical values to numerical values for prediction
-smoking = 1 if smoking == 'Yes' else 0
-diabetes = 1 if diabetes == 'Yes' else 0
-family_history = 1 if family_history == 'Yes' else 0
-lifestyle = 1 if lifestyle == 'Yes' else 0
-
 # Prediction
 if st.button('Predict Heart Attack Risk'):
-    input_data = np.array([[age, heart_rate, blood_sugar, blood_pressure, cholesterol, smoking, diabetes, family_history, lifestyle]])
+    input_data = np.array([[age, heart_rate, blood_sugar]])
     prediction = model.predict(input_data)
 
-    if prediction[0] == 2:  # High Risk
+    if prediction[0] == 1:
         st.error('⚠️ High Risk of Heart Attack! Please consult a doctor.')
-        st.write("### Health Recommendations for High Risk:")
-        st.write("- Maintain a healthy diet, exercise regularly, and monitor cholesterol and blood pressure.")
-        st.write("- Avoid smoking and limit alcohol intake.")
-        st.write("- Consult a doctor immediately.")
-        
-    elif prediction[0] == 1:  # Moderate Risk
-        st.warning('⚠️ Moderate Risk of Heart Attack. Please monitor closely and consult a doctor.')
-        st.write("### Health Recommendations for Moderate Risk:")
-        st.write("- Stay active with regular exercise.")
-        st.write("- Maintain a healthy diet, low in fats and sugars.")
-        st.write("- Monitor blood pressure, cholesterol levels, and blood sugar.")
-        st.write("- Consider discussing your lifestyle with a doctor.")
-        
-    else:  # Low Risk
+    else:
         st.success('✅ Low Risk of Heart Attack. Stay healthy!')
-        st.write("### Health Tips for Low Risk:")
-        st.write("- Keep up with regular physical activity.")
-        st.write("- Follow a balanced and nutritious diet.")
-        st.write("- Stay hydrated and maintain a healthy weight.")
-        st.write("- Regular checkups are still important.")
 
 st.write('---')
 st.caption('Developed by Sakshi Chavan')
