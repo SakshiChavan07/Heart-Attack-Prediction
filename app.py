@@ -29,7 +29,14 @@ st.title('❤️ Heart Attack Risk Prediction App')
 st.write("""
 ### Enter your health details below:
 """)
+# User input: Name and Gender
+name = st.text_input('Enter your Name:')
+gender = st.selectbox('Select your Gender:', ['Male', 'Female', 'Other'])
 
+# Greeting message when both fields are filled
+if name and gender:
+    st.success(f"Hello {name}, let's get started! You are a {gender}.")
+    
 # Input fields
 age = st.number_input('Enter your Age:', min_value=1, max_value=120)
 heart_rate = st.number_input('Enter your Heart Rate:', min_value=30, max_value=220)
@@ -46,4 +53,4 @@ if st.button('Predict Heart Attack Risk'):
         st.success('✅ Low Risk of Heart Attack. Stay healthy!')
 
 st.write('---')
-st.caption('Developed by [Your Name]')
+st.caption('Developed by Sakshi Chavan')
