@@ -1,14 +1,24 @@
+
+
 import streamlit as st
 import numpy as np
-import pickle
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
 
 # -----------------------
-# Load Trained Model
+# Model Training
 # -----------------------
 
-# Load your saved model (replace 'your_model.pkl' with your actual filename)
-with open('Project.pkl', 'rb') as file:
-    model = pickle.load(file)
+# Dummy dataset for training
+X = np.random.rand(200, 3)  # Features: Age, Heart Rate, Blood Sugar
+y = np.random.randint(0, 3, 200)  # Labels: 0 = Low Risk, 1 = Moderate Risk, 2 = High Risk
+
+# Split the data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Train a simple Logistic Regression model
+model = LogisticRegression(max_iter=200)
+model.fit(X_train, y_train)
 
 # -----------------------
 # Streamlit App UI
@@ -20,7 +30,6 @@ st.title('❤️ Heart Attack Risk Prediction App')
 st.write("""
 ### Enter your health details below:
 """)
-
 # User input: Name and Gender
 name = st.text_input('Enter your Name:')
 gender = st.selectbox('Select your Gender:', ['Male', 'Female', 'Other'])
@@ -28,21 +37,16 @@ gender = st.selectbox('Select your Gender:', ['Male', 'Female', 'Other'])
 # Greeting message when both fields are filled
 if name and gender:
     st.success(f"Hello {name}, Let's check your heart health. ❤️!")
-
+    
 # Input fields
 age = st.number_input('Enter your Age:', min_value=1, max_value=120)
 heart_rate = st.number_input('Enter your Heart Rate:', min_value=30, max_value=220)
 blood_sugar = st.number_input('Enter your Blood Sugar Level:', min_value=50, max_value=300)
 smoking = st.selectbox('Do you smoke?', ['No', 'Yes'])
 
-# Preprocessing smoking input (if needed)
-smoking_value = 1 if smoking == 'Yes' else 0
-
-# Combine all inputs (if your model expects smoking too, adjust accordingly)
-input_data = np.array([[age, heart_rate, blood_sugar, smoking_value]])
-
 # Prediction
 if st.button('Predict Heart Attack Risk'):
+    input_data = np.array([[age, heart_rate, blood_sugar]])
     prediction = model.predict(input_data)
 
     if prediction[0] == 2:
