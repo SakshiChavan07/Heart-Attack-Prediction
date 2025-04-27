@@ -7,7 +7,7 @@ import pickle
 # -----------------------
 
 # Load your saved model (replace 'your_model.pkl' with your actual filename)
-with open('your_model.pkl', 'rb') as file:
+with open('Project.pkl', 'rb') as file:
     model = pickle.load(file)
 
 # -----------------------
