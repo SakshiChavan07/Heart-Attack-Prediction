@@ -34,7 +34,7 @@ gender = st.selectbox('Select your Gender:', ['Male', 'Female', 'Other'])
 
 # Greeting message when both fields are filled
 if name and gender:
-    st.success(f"Hello {name}, let's get started!")
+    st.success(f"Hello {name}, Let's check your heart health. ❤️!")
     
 # Input fields
 age = st.number_input('Enter your Age:', min_value=1, max_value=120)
