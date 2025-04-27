@@ -43,6 +43,7 @@ if name and gender:
 age = st.number_input('Enter your Age:', min_value=1, max_value=120)
 heart_rate = st.number_input('Enter your Heart Rate:', min_value=30, max_value=220)
 blood_sugar = st.number_input('Enter your Blood Sugar Level:', min_value=50, max_value=300)
+smoking = st.selectbox('Do you smoke?', ['No', 'Yes'])
 
 # Prediction
 if st.button('Predict Heart Attack Risk'):
